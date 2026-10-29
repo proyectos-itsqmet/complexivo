@@ -1,0 +1,120 @@
+<section class="space-y-8">
+  <h1 class="text-3xl font-bold text-main">Administrar Peliculas</h1>
+
+  <form
+    (ngSubmit)="save()"
+    class="bg-white border border-slate-200 rounded-lg shadow-md p-6 grid grid-cols-1 md:grid-cols-2 gap-4"
+  >
+    <h2 class="md:col-span-2 text-xl font-semibold">
+      {{ editing ? 'Editar Pelicula' : 'Nuevo Pelicula' }}
+    </h2>
+
+    <div>
+      <label for="titulo" class="block text-sm font-medium mb-1">titulo</label>
+      <input
+        id="titulo"
+        name="titulo"
+        required
+        [(ngModel)="newItem.titulo"
+        class="w-full border border-slate-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-main"
+      />
+    </div>
+
+    <div>
+      <label for="genero" class="block text-sm font-medium mb-1">Genero</label>
+      <select
+        id="genero"
+        name="genero"
+        [(ngModel)]="newItem.genero"
+        class="w-full border border-slate-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-main"
+      >
+        <option value="Pelicula">Pelicula</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="anio" class="block text-sm font-medium mb-1">Año</label>
+      <input
+        id="anio"
+        name="anio"
+        type="number"
+        required
+        [(ngModel)]="newItem.anio"
+        class="w-full border border-slate-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-main"
+      />
+    </div>
+
+    <div>
+      <label for="duracion" class="block text-sm font-medium mb-1">Duración</label>
+      <input
+        id="duracion"
+        name="duracion"
+        required
+        [(ngModel)]="newItem.duracion"
+        class="w-full border border-slate-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-main"
+      />
+    </div>
+
+    <div class="md:col-span-2 flex gap-3">
+      <button
+        type="submit"
+        class="bg-main text-white px-4 py-2 rounded font-semibold shadow-md hover:bg-main-dark hover:shadow-lg cursor-pointer"
+      >
+        {{ editing ? 'Actualizar' : 'Guardar' }}
+      </button>
+      <button
+        type="button"
+        (click)="reset()"
+        class="border border-slate-300 px-4 py-2 rounded font-semibold shadow-md hover:shadow-lg cursor-pointer"
+      >
+        Cancelar
+      </button>
+    </div>
+  </form>
+
+  <div class="bg-white border border-slate-200 rounded-lg shadow-md overflow-x-auto">
+    <table class="w-full text-sm text-left">
+      <thead class="bg-main text-white">
+        <tr>
+          <th class="px-4 py-3">id</th>
+          <th class="px-4 py-3">Titulo</th>
+          <th class="px-4 py-3">Genero</th>
+          <th class="px-4 py-3">Duración</th>
+          <th class="px-4 py-3">Año</th>
+          <th class="px-4 py-3">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of list(); track item.id) {
+          <tr class="border-t border-slate-200">
+            <td class="px-4 py-3 font-medium">{{ item.id }}</td>
+            <td class="px-4 py-3">{{ item.titulo }}</td>
+            <td class="px-4 py-3">{{ item.genero }}</td>
+            <td class="px-4 py-3">{{ item.duracion }}</td>
+            <td class="px-4 py-3">★ {{ item.anio }}/10</td>
+            <td class="px-4 py-3 whitespace-nowrap space-x-2">
+              <button
+                type="button"
+                (click)="selectForEdit(item)"
+                class="border border-main text-main px-3 py-1 rounded shadow-md hover:shadow-lg cursor-pointer"
+              >
+                Editar
+              </button>
+              <button
+                type="button"
+                (click)="delete(item.id)"
+                class="bg-main text-white px-3 py-1 rounded shadow-md hover:bg-main-dark hover:shadow-lg cursor-pointer"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6" class="px-4 py-6 text-center text-slate-500">No hay registros</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
